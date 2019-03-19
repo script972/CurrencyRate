@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "605282035872",
+    "firebase_url": "https://currencyrate-a3b97.firebaseio.com",
+    "project_id": "currencyrate-a3b97",
+    "storage_bucket": "currencyrate-a3b97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605282035872:android:a7126afc982c73e3",
+        "android_client_info": {
+          "package_name": "com.script972.currencyrate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605282035872-d0dv52ildmk4hg2l082s09g1odkb7cq9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.script972.currencyrate",
+            "certificate_hash": "f1a2914dae132223ec79cd206c4fc5a2cb352617"
+          }
+        },
+        {
+          "client_id": "605282035872-7r3p92hp5cv4j8tgai9aeud4d1tfr5tt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwP0Nhg63IwMOShw3fJfvhIakaT6WL3pc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605282035872-7r3p92hp5cv4j8tgai9aeud4d1tfr5tt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

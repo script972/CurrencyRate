@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Currency Rate</string>
+    <string name="title_not_official">Not official NBU app</string>
+    <string name="title_control_money_supply">Control Money supply</string>
+    <string name="label_main_activity">Dashboard currency</string>
+    <string name="hint_enter_currency">Enter currenсy...</string>
+    <string name="menu_statistics">Chart</string>
+    <string name="menu_table">Table</string>
+    <string name="label_statistics">Statistic</string>
+    <string name="no_internet">You are offile, last date was</string>
+    <string name="swith_on_internet">Please switch on internet</string>
+    <string name="end_date">End date</string>
+    <string name="start_date">Start date</string>
+    <string name="toast_not_valid_date_value">Date range is invalid</string>
+
+</resources>
