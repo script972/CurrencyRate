@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.script972.currencyrate.api.model.CurrencyResponce;
+import com.script972.currencyrate.domain.database.entity.CurrencySelectValue;
 import com.script972.currencyrate.ui.activities.DetailsActivity;
 import com.script972.currencyrate.ui.activities.MainActivity;
 
@@ -17,7 +18,7 @@ public class ActivityUtils {
         context.startActivity(intent);
     }
 
-    public static void startDetailsActivity(Context context, CurrencyResponce currencyResponce) {
+    public static void startDetailsActivity(Context context, CurrencySelectValue currencyResponce) {
         Intent intent = new Intent(context, DetailsActivity.class);
         intent.putExtra(EXTRA_CURRENCY, currencyResponce.getTitleShort());
         context.startActivity(intent);

@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 
 import com.script972.currencyrate.api.model.CurrencyResponce;
 import com.script972.currencyrate.databinding.ItemCurrencyListBinding;
+import com.script972.currencyrate.domain.database.entity.CurrencySelectValue;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.CurrencyViewHolder> {
 
-    private List<CurrencyResponce> data;
+    private List<CurrencySelectValue> data;
     private OnClickListener clicker;
 
     class CurrencyViewHolder extends RecyclerView.ViewHolder {
@@ -31,7 +32,7 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.Curren
         }
     }
 
-    public CurrencyAdapter(List<CurrencyResponce> data, OnClickListener clickListener) {
+    public CurrencyAdapter(List<CurrencySelectValue> data, OnClickListener clickListener) {
         this.data = data;
         this.clicker = clickListener;
     }
@@ -55,7 +56,7 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.Curren
 
 
     public interface OnClickListener {
-        void onClickItem(CurrencyResponce currencyResponce);
+        void onClickItem(CurrencySelectValue currencyResponce);
     }
 
 }

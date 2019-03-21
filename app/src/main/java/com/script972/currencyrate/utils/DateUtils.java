@@ -27,26 +27,44 @@ public class DateUtils {
         return simpleDateFormat.format((value));
     }
 
+    public static long patterntToTimestamp(String value) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.US);
+        try {
+            return simpleDateFormat.parse(value).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     public static String soutDateForApi(long value) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN_API, Locale.US);
         return simpleDateFormat.format((value));
     }
 
     public static long entityDate(String date) {
+        Log.i("denlogdate", "DAte="+date);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN_PARSE_API, Locale.US);
         try {
             long value = simpleDateFormat.parse((date)).getTime();
             Calendar calendar = Calendar.getInstance();
+            calendar.clear();
             calendar.setTimeInMillis(value);
             calendar.set(Calendar.HOUR, 10);
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
+            Log.i("denlogdate", "DAteOut="+calendar.getTimeInMillis());
             return calendar.getTimeInMillis();
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    public static long entityDateFromCalendar(Calendar calendar) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN_PARSE_API, Locale.US);
+        return entityDate(simpleDateFormat.format(calendar.getTime()));
     }
 
     public static Long roundDateForApi(long time) {

@@ -1,11 +1,19 @@
 package com.script972.currencyrate.viewmodels;
 
+import android.app.Application;
+import android.util.Log;
+
 import com.script972.currencyrate.api.model.ApiResponse;
 import com.script972.currencyrate.api.model.CurrencyResponce;
+import com.script972.currencyrate.core.CurrencyApplication;
+import com.script972.currencyrate.domain.database.entity.CurrencySelectValue;
 import com.script972.currencyrate.domain.repository.impl.CurrencyRepositoryImpl;
 import com.script972.currencyrate.domain.repository.CurrencyRepository;
+import com.script972.currencyrate.utils.SharedPreferencesUtils;
 
+import java.security.AlgorithmParameters;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -18,8 +26,8 @@ public class MainViewModel extends ViewModel {
     /**
      * Immutable data
      */
-    private ApiResponse apiResponse;
-    private final MediatorLiveData<List<CurrencyResponce>> dataList;
+    private List<CurrencySelectValue> apiResponse;
+    private final MediatorLiveData<List<CurrencySelectValue>> dataList;
 
     private CurrencyRepository currencyRepository;
 
@@ -29,7 +37,7 @@ public class MainViewModel extends ViewModel {
     }
 
     @NonNull
-    public LiveData<List<CurrencyResponce>> getDataForList() {
+    public LiveData<List<CurrencySelectValue>> getDataForList() {
         return dataList;
     }
 
@@ -37,35 +45,21 @@ public class MainViewModel extends ViewModel {
      * Load currency data for today
      */
     public void loadCurrency() {
-        LiveData<ApiResponse> source = currencyRepository.findAllCurrencyForToday();
+        LiveData<List<CurrencySelectValue>> source = currencyRepository.findAllCurrencyForToday();
         dataList.addSource(
                 source,
-                apiResponse -> {
-                    if (this.dataList.hasActiveObservers()) {
-                        this.dataList.removeSource(source);
-                    }
-                    if (apiResponse.getError() != null) {
-                        return;
-                    }
-                    fillDatabase(apiResponse.getCurrencyResponceList());
-                    this.apiResponse = apiResponse;
-                    this.dataList.setValue(apiResponse.getCurrencyResponceList());
+                dataListRep -> {
+                    this.apiResponse = dataListRep;
+                    this.dataList.setValue(dataListRep);
                 }
         );
-    }
-
-    /**
-     * Fill database if need
-     */
-    private void fillDatabase(List<CurrencyResponce> currencyResponceList) {
-        currencyRepository.updaAllDatabaseCurrencyIfNeed(currencyResponceList);
     }
 
     /**
      * Filter data by subsring
      */
     public void filterData(String value) {
-        if (value == null || value.isEmpty() || apiResponse == null) {
+        /*if (value == null || value.isEmpty() || apiResponse != null) {
             dataList.setValue(apiResponse.getCurrencyResponceList());
             return;
         }
@@ -79,6 +73,6 @@ public class MainViewModel extends ViewModel {
                 newData.add(listData.get(i));
             }
         }
-        dataList.setValue(newData);
+        dataList.setValue(newData);*/
     }
 }

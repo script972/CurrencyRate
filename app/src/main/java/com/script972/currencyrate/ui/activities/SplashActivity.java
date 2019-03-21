@@ -23,7 +23,7 @@ public class SplashActivity extends BaseActivity {
      */
     private void waiter() {
         syncData();
-        new Handler().postDelayed(this::openNextActivity, delay);
+        new Handler().postDelayed(this::openNextActivity, this.delay);
     }
 
     private void syncData() {

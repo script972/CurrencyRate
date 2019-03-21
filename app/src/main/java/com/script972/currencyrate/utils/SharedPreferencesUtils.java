@@ -17,11 +17,11 @@ public class SharedPreferencesUtils {
      * Save sync currency date
      *
      * @param context
-     * @param timestemp
-     */ //TODO
-    public static void setLastSyncDate(Context context, long timestemp) {
+     * @param timestamp
+     */
+    public static void setLastSyncDate(Context context, long timestamp) {
         SharedPreferences.Editor prefEditor = getSharedPreferences(context).edit();
-        prefEditor.putLong(LAST_SYNC_DATE, timestemp);
+        prefEditor.putLong(LAST_SYNC_DATE, timestamp);
         prefEditor.apply();
     }
 

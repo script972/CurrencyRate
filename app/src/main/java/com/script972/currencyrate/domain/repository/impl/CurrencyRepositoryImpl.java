@@ -4,8 +4,9 @@ import android.os.AsyncTask;
 
 import com.script972.currencyrate.api.model.CurrencyResponce;
 import com.script972.currencyrate.api.services.CurrencyApiService;
+import com.script972.currencyrate.core.CurrencyApplication;
+import com.script972.currencyrate.domain.database.entity.CurrencySelectValue;
 import com.script972.currencyrate.managers.RetrofitManager;
-import com.script972.currencyrate.api.model.ApiResponse;
 import com.script972.currencyrate.domain.database.entity.CurrencyEntity;
 import com.script972.currencyrate.domain.database.entity.CurrencyValueEntity;
 import com.script972.currencyrate.domain.repository.CurrencyRepository;
@@ -13,9 +14,11 @@ import com.script972.currencyrate.mappers.MapperCurrencyCommon;
 import com.script972.currencyrate.ui.model.CurrencyValueModel;
 import com.script972.currencyrate.utils.DateUtils;
 import com.script972.currencyrate.managers.DatabaseManager;
+import com.script972.currencyrate.utils.SharedPreferencesUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
@@ -37,29 +40,27 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
     }
 
     @Override
-    public LiveData<ApiResponse> findAllCurrencyForToday() {
-        final MutableLiveData<ApiResponse> liveData = new MutableLiveData<>();
-
+    public LiveData<List<CurrencySelectValue>> findAllCurrencyForToday() {
+        final MutableLiveData<List<CurrencySelectValue>> liveData = new MutableLiveData<>();
+        db.getCurrencyValueDao().getValuesForCurrency(DateUtils.entityDateFromCalendar(
+                Calendar.getInstance())).observeForever(liveData::setValue);
         Call<List<CurrencyResponce>> call = apiService.getAllCurrencyForToday();
         call.enqueue(new Callback<List<CurrencyResponce>>() {
             @Override
             public void onResponse(Call<List<CurrencyResponce>> call, Response<List<CurrencyResponce>> response) {
-                liveData.setValue(new ApiResponse(response.body()));
+                updaAllDatabaseCurrencyIfNeed(response.body());
+                SharedPreferencesUtils.setLastSyncDate(CurrencyApplication.getApplication(), Calendar.getInstance().getTimeInMillis());
             }
 
             @Override
             public void onFailure(Call<List<CurrencyResponce>> call, Throwable t) {
-                liveData.setValue(new ApiResponse(t));
             }
         });
         return liveData;
     }
 
-
-    @Override
-    public void updaAllDatabaseCurrencyIfNeed(List<CurrencyResponce> currencyResponceList) {
+    private void updaAllDatabaseCurrencyIfNeed(List<CurrencyResponce> currencyResponceList) {
         new FillCurrency(currencyResponceList).execute();
-
     }
 
     @Override
@@ -79,7 +80,7 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
 
     @Override
     public void changeFavorite(String currency) {
-
+        //TODO
     }
 
     /**
@@ -154,12 +155,28 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
             //TODO check every item equels. Not size
             if (list == null || list.size() == 0) {
                 for (int i = 0; i < data.size(); i++) {
+                    //fill currency
                     db.getCurrencyDao().insert(MapperCurrencyCommon.MapperCurrency.mapNetworkToDb(data.get(i)));
                 }
             }
+
+            for (int i = 0; i < data.size(); i++) {
+                CurrencyEntity curr = db.getCurrencyDao().getByShortValue(data.get(i).getTitleShort());
+                if (existingDataForCurrencyAtDate(curr, DateUtils.entityDate(data.get(i).getDate()))) {
+                    continue;
+                }
+                CurrencyValueEntity currencyValue = MapperCurrencyCommon.MapperCurrencyValue
+                        .responceToEntity(curr, data.get(i));
+                db.getCurrencyValueDao().insert(currencyValue);
+            }
             return null;
         }
+
+        private boolean existingDataForCurrencyAtDate(CurrencyEntity curr, long entityDate) {
+            return db.getCurrencyValueDao().getValueForCurrencyAndDate(curr.getId(), entityDate) != null;
+        }
     }
+
 }
 
 

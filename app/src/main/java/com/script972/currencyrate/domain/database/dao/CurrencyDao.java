@@ -1,7 +1,6 @@
 package com.script972.currencyrate.domain.database.dao;
 
 import com.script972.currencyrate.domain.database.entity.CurrencyEntity;
-import com.script972.currencyrate.domain.database.entity.CurrencyValueEntity;
 
 import java.util.List;
 
@@ -24,4 +23,6 @@ public interface CurrencyDao {
 
     @Query("SELECT * FROM CurrencyEntity WHERE titleShort=:shortTitle")
     CurrencyEntity getByShortValue(String shortTitle);
+
+
 }

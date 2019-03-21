@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.script972.currencyrate.R;
 import com.script972.currencyrate.api.model.CurrencyResponce;
 import com.script972.currencyrate.databinding.ActivityMainBinding;
+import com.script972.currencyrate.domain.database.entity.CurrencySelectValue;
 import com.script972.currencyrate.utils.ActivityUtils;
 import com.script972.currencyrate.utils.DateUtils;
 import com.script972.currencyrate.utils.SharedPreferencesUtils;
@@ -35,12 +36,12 @@ public class MainActivity extends BaseActivity {
 
     private MainViewModel viewModel;
 
-    private final List<CurrencyResponce> list = new ArrayList<>();
+    private final List<CurrencySelectValue> list = new ArrayList<>();
 
     /**
      * Immutable data
      */
-    private final List<CurrencyResponce> basicData = new ArrayList<>();
+    private final List<CurrencySelectValue> basicData = new ArrayList<>();
 
     private ActivityMainBinding binding;
 
@@ -49,11 +50,9 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        //setContentView(R.layout.activity_main);
-        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        this.viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         initView();
-        viewModel.loadCurrency();
-
+        this.viewModel.loadCurrency();
         loadCurrency();
 
     }
@@ -77,14 +76,14 @@ public class MainActivity extends BaseActivity {
                 viewModel.filterData(s.toString());
             }
         });
-
-        adapter = new CurrencyAdapter(list, currencyModel -> ActivityUtils.startDetailsActivity(MainActivity.this, currencyModel));
-        this.binding.rvCurrency.setAdapter(adapter);
+        this.adapter = new CurrencyAdapter(this.list, currencyModel ->
+                ActivityUtils.startDetailsActivity(MainActivity.this, currencyModel));
+        this.binding.rvCurrency.setAdapter(this.adapter);
         LinearLayoutManager llm = new GridLayoutManager(this.getApplicationContext(), 3);
         llm.setOrientation(RecyclerView.VERTICAL);
         this.binding.rvCurrency.setLayoutManager(llm);
         this.binding.rvCurrency.setItemAnimator(new DefaultItemAnimator());
-        adapter.notifyDataSetChanged();
+        this.adapter.notifyDataSetChanged();
     }
 
     /**
@@ -114,11 +113,11 @@ public class MainActivity extends BaseActivity {
         viewModel.getDataForList().observe(this, this::handleResponse);
     }
 
-    private void handleResponse(List<CurrencyResponce> currencyResponceList) {
-        list.clear();
-        list.addAll(currencyResponceList);
-        basicData.addAll(currencyResponceList);
-        adapter.notifyDataSetChanged();
+    private void handleResponse(List<CurrencySelectValue> currencyResponceList) {
+        this.list.clear();
+        this.list.addAll(currencyResponceList);
+        this.basicData.addAll(currencyResponceList);
+        this.adapter.notifyDataSetChanged();
     }
 
 }

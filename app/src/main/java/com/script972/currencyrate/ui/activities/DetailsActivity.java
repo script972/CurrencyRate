@@ -94,11 +94,11 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
 
     private void setupViewPager(ViewPager viewPager) {
         List<Fragment> fragments = new ArrayList<>();
-        chartFragment = ChartFragment.getInstance();
-        listFragment = ListFragment.getInstance();
-        fragments.add(listFragment);
-        fragments.add(chartFragment);
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments);
+        this.chartFragment = ChartFragment.getInstance();
+        this.listFragment = ListFragment.getInstance();
+        fragments.add(this.listFragment);
+        fragments.add(this.chartFragment);
+        this.adapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments);
         viewPager.setOffscreenPageLimit(fragments.size());
         viewPager.setAdapter(adapter);
     }
@@ -123,11 +123,11 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void refreshDateRange() {
-        if (!startDate.before(endDate)) {
+        if (!this.startDate.before(this.endDate)) {
             Toast.makeText(this, getResources().getString(R.string.toast_not_valid_date_value), Toast.LENGTH_LONG).show();
             return;
         }
-        viewModel.rangeDateUpdate(startDate, endDate, currency);
+        this.viewModel.rangeDateUpdate(this.startDate, this.endDate, this.currency);
     }
 
     @Override
@@ -135,15 +135,15 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.txt_start_date:
                 DialogUtils.showDateDialog(this, startDate, value -> {
-                    startDate = value;
-                    binding.txtStartDate.setText(getResources().getString(R.string.start_date) + " " + DateUtils.soutDate(value.getTimeInMillis()));
+                    this.startDate = value;
+                    this.binding.txtStartDate.setText(getResources().getString(R.string.start_date) + " " + DateUtils.soutDate(value.getTimeInMillis()));
                     refreshDateRange();
                 });
                 break;
             case R.id.txt_end_date:
-                DialogUtils.showDateDialog(this, endDate, value -> {
-                    endDate = value;
-                    binding.txtEndDate.setText(getResources().getString(R.string.end_date) + " " + DateUtils.soutDate(value.getTimeInMillis()));
+                DialogUtils.showDateDialog(this, this.endDate, value -> {
+                    this.endDate = value;
+                    this.binding.txtEndDate.setText(getResources().getString(R.string.end_date) + " " + DateUtils.soutDate(value.getTimeInMillis()));
                     refreshDateRange();
                 });
                 break;

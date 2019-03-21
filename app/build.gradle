@@ -29,6 +29,8 @@ android {
     }
 }
 
+
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
@@ -59,7 +61,7 @@ dependencies {
     /**
      * Firebase storage
      */
-    implementation 'com.google.firebase:firebase-core:16.0.7'
+    implementation 'com.google.firebase:firebase-core:16.0.8'
 
     /**
      * Chart
