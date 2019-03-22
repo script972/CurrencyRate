@@ -1,6 +1,6 @@
 package com.script972.currencyrate.managers;
 
-import com.script972.currencyrate.api.ApiClient;
+import com.script972.currencyrate.domain.api.ApiClient;
 import com.script972.currencyrate.utils.NetworkLoggingSettingsUtils;
 
 import java.lang.annotation.Annotation;

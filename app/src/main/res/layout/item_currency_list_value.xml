@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -9,30 +10,31 @@
             type="com.script972.currencyrate.ui.model.CurrencyValueModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        android:weightSum="10">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/txt_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:text="@{String.valueOf(currency.rate)}"
             android:textColor="@color/colorBlack"
             android:textSize="24sp"
             tools:text="28.4" />
 
         <TextView
-            android:id="@+id/txt_currency"
+            android:id="@+id/txt_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:text="@{currency.date}"
             android:textSize="22sp"
-            tools:text="Австралійський долар" />
+            tools:text="03.22.19" />
 
-    </LinearLayout>
+    </RelativeLayout>
+
 
 </layout>

@@ -8,18 +8,12 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.script972.currencyrate.R;
 import com.script972.currencyrate.databinding.ActivityDescriptionBinding;
-import com.script972.currencyrate.domain.database.entity.CurrencyValueEntity;
 import com.script972.currencyrate.ui.model.CurrencyValueModel;
 import com.script972.currencyrate.utils.ActivityUtils;
 import com.script972.currencyrate.utils.DateUtils;
@@ -58,12 +52,12 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         this.viewModel = ViewModelProviders.of(this).get(DetailsViewModel.class);
         parseIntent();
         initView();
-        loadDate();
+        initViewModel();
     }
 
 
-    private void loadDate() {
-        viewModel.getDataForList().observe(this, this::handleResponse);
+    private void initViewModel() {
+        viewModel.getCurrencyValueLiveData().observe(this, this::handleResponse);
     }
 
     private void handleResponse(List<CurrencyValueModel> currencyModelList) {

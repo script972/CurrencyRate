@@ -1,4 +1,4 @@
-package com.script972.currencyrate.api.model;
+package com.script972.currencyrate.domain.api.model;
 
 
 import java.util.List;

@@ -21,6 +21,9 @@ public interface CurrencyDao {
     @Insert
     void insert(CurrencyEntity value);
 
+    @Insert
+    void insertAll(List<CurrencyEntity> value);
+
     @Query("SELECT * FROM CurrencyEntity WHERE title_short = :shortTitle")
     CurrencyEntity getByShortValue(String shortTitle);
 

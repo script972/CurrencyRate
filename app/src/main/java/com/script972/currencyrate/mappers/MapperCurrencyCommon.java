@@ -1,15 +1,11 @@
 package com.script972.currencyrate.mappers;
 
-import android.util.Log;
-
-import com.script972.currencyrate.api.model.CurrencyResponce;
+import com.script972.currencyrate.domain.api.model.CurrencyResponce;
 import com.script972.currencyrate.domain.database.entity.CurrencyEntity;
 import com.script972.currencyrate.domain.database.entity.CurrencyValueEntity;
 import com.script972.currencyrate.ui.model.CurrencyValueModel;
 import com.script972.currencyrate.utils.DateUtils;
 import com.script972.currencyrate.utils.NumberUtils;
-
-import java.util.Calendar;
 
 public class MapperCurrencyCommon {
     public static class MapperCurrency {

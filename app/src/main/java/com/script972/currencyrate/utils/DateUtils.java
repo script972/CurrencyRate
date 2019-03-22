@@ -43,7 +43,6 @@ public class DateUtils {
     }
 
     public static long entityDate(String date) {
-        Log.i("denlogdate", "DAte="+date);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN_PARSE_API, Locale.US);
         try {
             long value = simpleDateFormat.parse((date)).getTime();
@@ -54,7 +53,6 @@ public class DateUtils {
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
-            Log.i("denlogdate", "DAteOut="+calendar.getTimeInMillis());
             return calendar.getTimeInMillis();
         } catch (ParseException e) {
             e.printStackTrace();

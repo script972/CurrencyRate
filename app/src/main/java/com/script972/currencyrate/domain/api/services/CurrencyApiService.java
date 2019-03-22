@@ -1,6 +1,6 @@
-package com.script972.currencyrate.api.services;
+package com.script972.currencyrate.domain.api.services;
 
-import com.script972.currencyrate.api.model.CurrencyResponce;
+import com.script972.currencyrate.domain.api.model.CurrencyResponce;
 
 import java.util.List;
 

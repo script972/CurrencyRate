@@ -17,32 +17,20 @@ public class MainViewModel extends ViewModel {
     /**
      * Immutable data
      */
-    private List<CurrencySelectValue> apiResponse;
+    private List<CurrencySelectValue> dataList = new ArrayList<>();
 
-    private final MediatorLiveData<List<CurrencySelectValue>> dataList;
+    private final MediatorLiveData<List<CurrencySelectValue>> currenciesLiveData;
 
-    private CurrencyRepository currencyRepository;
+    private CurrencyRepository currencyRepository = new CurrencyRepositoryImpl();
 
     public MainViewModel() {
-        this.dataList = new MediatorLiveData<>();
-        this.currencyRepository = new CurrencyRepositoryImpl();
-    }
-
-    @NonNull
-    public LiveData<List<CurrencySelectValue>> getDataForList() {
-        return dataList;
-    }
-
-    /**
-     * Load currency data for today
-     */
-    public void loadCurrency() {
+        this.currenciesLiveData = new MediatorLiveData<>();
         LiveData<List<CurrencySelectValue>> source = currencyRepository.findAllCurrencyForToday();
-        dataList.addSource(
+        currenciesLiveData.addSource(
                 source,
                 dataListRep -> {
-                    this.apiResponse = dataListRep;
-                    this.dataList.setValue(dataListRep);
+                    this.dataList = dataListRep;
+                    this.currenciesLiveData.setValue(dataListRep);
                 }
         );
     }
@@ -52,17 +40,22 @@ public class MainViewModel extends ViewModel {
      */
     public void filterData(String value) {
         if (value == null || value.isEmpty()) {
-            dataList.setValue(apiResponse);
+            currenciesLiveData.setValue(dataList);
             return;
         }
 
         List<CurrencySelectValue> newData = new ArrayList<>();
-        for (int i = 0; i < apiResponse.size(); i++) {
-            if (apiResponse.get(i).getTitle().toLowerCase().contains(value.toLowerCase()) ||
-                    apiResponse.get(i).getTitleShort().toLowerCase().contains(value.toLowerCase())) {
-                newData.add(apiResponse.get(i));
+        for (int i = 0; i < dataList.size(); i++) {
+            if (dataList.get(i).getTitle().toLowerCase().contains(value.toLowerCase()) ||
+                    dataList.get(i).getTitleShort().toLowerCase().contains(value.toLowerCase())) {
+                newData.add(dataList.get(i));
             }
         }
-        dataList.setValue(newData);
+        currenciesLiveData.setValue(newData);
+    }
+
+    @NonNull
+    public LiveData<List<CurrencySelectValue>> getCurrenciesLiveData() {
+        return currenciesLiveData;
     }
 }

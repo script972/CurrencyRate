@@ -8,6 +8,7 @@ import java.util.List;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 @Dao
@@ -18,8 +19,11 @@ public interface CurrencyValueDao {
     LiveData<List<CurrencyValueEntity>> getValuesForDate(String currency, long startDate,
                                                          long endDate);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(CurrencyValueEntity value);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertList(List<CurrencyValueEntity> value);
 
     @Query("SELECT * FROM CurrencyValueEntity WHERE date=:date AND currency_id=:currencyValue")
     CurrencyValueEntity getItemCurrencyForDate(long date, long currencyValue);

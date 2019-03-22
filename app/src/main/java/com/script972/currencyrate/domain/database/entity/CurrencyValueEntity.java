@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
+import androidx.room.Index;
+import androidx.room.OnConflictStrategy;
 import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
@@ -11,7 +13,11 @@ import static androidx.room.ForeignKey.CASCADE;
 @Entity(foreignKeys = @ForeignKey(entity = CurrencyEntity.class,
         parentColumns = "id",
         childColumns = "currency_id",
-        onDelete = CASCADE))
+        onDelete = CASCADE),
+        indices = {
+                @Index(value = {"date", "rate"}, unique = true)
+        }
+)
 public class CurrencyValueEntity {
 
     @PrimaryKey(autoGenerate = true)

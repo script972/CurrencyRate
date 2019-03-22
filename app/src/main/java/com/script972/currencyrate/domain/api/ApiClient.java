@@ -1,4 +1,4 @@
-package com.script972.currencyrate.api;
+package com.script972.currencyrate.domain.api;
 
 public class ApiClient {
 

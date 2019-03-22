@@ -1,6 +1,5 @@
 package com.script972.currencyrate.viewmodels;
 
-import com.script972.currencyrate.domain.database.entity.CurrencyValueEntity;
 import com.script972.currencyrate.domain.repository.CurrencyRepository;
 import com.script972.currencyrate.domain.repository.impl.CurrencyRepositoryImpl;
 import com.script972.currencyrate.ui.model.CurrencyValueModel;
@@ -18,18 +17,19 @@ import androidx.lifecycle.ViewModel;
 
 public class DetailsViewModel extends ViewModel {
 
-    private final MediatorLiveData<List<CurrencyValueModel>> dataList;
+    private final MediatorLiveData<List<CurrencyValueModel>> currencyValueLiveData;
 
     private CurrencyRepository currencyRepository;
 
     public DetailsViewModel() {
-        this.dataList = new MediatorLiveData<>();
+        this.currencyValueLiveData = new MediatorLiveData<>();
         this.currencyRepository = new CurrencyRepositoryImpl();
+
     }
 
     @NonNull
-    public LiveData<List<CurrencyValueModel>> getDataForList() {
-        return dataList;
+    public LiveData<List<CurrencyValueModel>> getCurrencyValueLiveData() {
+        return currencyValueLiveData;
     }
 
 
@@ -37,7 +37,7 @@ public class DetailsViewModel extends ViewModel {
         Calendar startDate = (Calendar) im.clone();
         List<Long> dataQuery = formatDateQuery(startDate, endDate);
         LiveData<List<CurrencyValueModel>> source = currencyRepository.findAllCurrencyForDates(dataQuery, currencyValue);
-        dataList.addSource(source, dataList::setValue);
+        currencyValueLiveData.addSource(source, currencyValueLiveData::setValue);
     }
 
     /**

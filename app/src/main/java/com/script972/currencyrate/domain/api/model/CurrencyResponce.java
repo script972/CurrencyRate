@@ -1,4 +1,4 @@
-package com.script972.currencyrate.api.model;
+package com.script972.currencyrate.domain.api.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

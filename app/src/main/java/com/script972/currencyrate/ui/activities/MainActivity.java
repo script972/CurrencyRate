@@ -50,8 +50,7 @@ public class MainActivity extends BaseActivity {
         this.binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         this.viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         initView();
-        this.viewModel.loadCurrency();
-        loadCurrency();
+        initViewModel();
 
     }
 
@@ -84,6 +83,10 @@ public class MainActivity extends BaseActivity {
         this.adapter.notifyDataSetChanged();
     }
 
+    private void initViewModel() {
+        this.viewModel.getCurrenciesLiveData().observe(this, this::handleModification);;
+    }
+
     /**
      * Show status internet
      */
@@ -107,13 +110,9 @@ public class MainActivity extends BaseActivity {
         getSupportActionBar().setTitle(getResources().getString(R.string.label_main_activity));
     }
 
-    public void loadCurrency() {
-        viewModel.getDataForList().observe(this, this::handleModification);
-    }
 
     private void handleModification(List<CurrencySelectValue> dataList) {
         this.list.clear();
-        Log.i("handle_modification", "dataListActivity=" + dataList.size());
         this.list.addAll(dataList);
         this.basicData.addAll(dataList);
         this.adapter.notifyDataSetChanged();

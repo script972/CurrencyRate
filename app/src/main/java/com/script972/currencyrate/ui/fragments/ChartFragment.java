@@ -14,7 +14,9 @@ import com.script972.currencyrate.ui.activities.DetailsActivity;
 import com.script972.currencyrate.ui.model.CurrencyValueModel;
 import com.script972.currencyrate.utils.DateUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class ChartFragment extends Fragment {
 
     private GraphView graph;
     private static ChartFragment fragment;
-    private List<CurrencyValueModel> data;
+    private List<CurrencyValueModel> data = new ArrayList<>();
 
 
     public ChartFragment() {
@@ -53,20 +55,28 @@ public class ChartFragment extends Fragment {
         graph.getGridLabelRenderer().setNumHorizontalLabels(3);
 
         /*graph.getViewport().setMinX(d1.getTime());
-        graph.getViewport().setMaxX(d3.getTime());
-        graph.getViewport().setXAxisBoundsManual(true);*/
+        graph.getViewport().setMaxX(d3.getTime());*/
+        graph.getViewport().setXAxisBoundsManual(true);
     }
 
     public void updateList() {
-        /*data = ((DetailsActivity) getActivity()).getDataCurrencyList();
-        DateUtils.patterntToTimestamp(data.get(0).getDate());
-        Collections.sort(data, (o1, o2) -> DateUtils.chartValueFromStr(o1.getDate()).getTime() >
-                DateUtils.chartValueFromStr(o2.getDate()).getTime() ? 0 : 1);
+        data = ((DetailsActivity) getActivity()).getDataCurrencyList();
+        Collections.reverse(data);
         DataPoint[] dataPoints = new DataPoint[data.size()];
         for (int i = 0; i < data.size(); i++) {
             dataPoints[i] = new DataPoint(DateUtils.chartValueFromStr(data.get(i).getDate()), Double.parseDouble(data.get(i).getRate()));
         }
         Arrays.sort(dataPoints, (o1, o2) -> o1.getX() > o2.getX() ? 0 : 1);
+        /*DataPoint[] dataPoints = new DataPoint[3];
+        Calendar calendar = Calendar.getInstance();
+        dataPoints[0] = new DataPoint(calendar.getTime(), 1);
+        calendar.add(Calendar.MONTH, 1*-1);
+        dataPoints[1] = new DataPoint(calendar.getTime(), 3);
+        calendar.add(Calendar.MONTH, 3);
+        dataPoints[2] = new DataPoint(calendar.getTime(), 12);*/
+
+       /* graph.getViewport().setMinX(dataPoints[0].getX());
+        graph.getViewport().setMaxX(dataPoints[data.size() - 1].getX());
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
         graph.addSeries(series);
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity(), DateUtils.getChartDataFormat()));*/
