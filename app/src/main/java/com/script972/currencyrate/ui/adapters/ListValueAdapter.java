@@ -1,33 +1,33 @@
 package com.script972.currencyrate.ui.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.script972.currencyrate.R;
+import com.script972.currencyrate.databinding.ItemCurrencyListValueBinding;
 import com.script972.currencyrate.ui.model.CurrencyValueModel;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ListValueAdapter extends RecyclerView.Adapter<ListValueAdapter.CurrencyViewHolder> {
 
     private List<CurrencyValueModel> data;
 
-    /**
-     * View holder class
-     */
-    public class CurrencyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView txtNumber;
-        private TextView txtCurrency;
+    class CurrencyViewHolder extends RecyclerView.ViewHolder {
 
-        CurrencyViewHolder(View view) {
-            super(view);
-            txtNumber = view.findViewById(R.id.txt_number);
-            txtCurrency = view.findViewById(R.id.txt_currency);
+        private ItemCurrencyListValueBinding binding;
+
+        CurrencyViewHolder(ItemCurrencyListValueBinding bindingView) {
+            super(bindingView.getRoot());
+            binding = bindingView;
+        }
+
+        private void bind() {
+            binding.setCurrency(data.get(getAdapterPosition()));
+            binding.invalidateAll();
         }
     }
 
@@ -36,10 +36,8 @@ public class ListValueAdapter extends RecyclerView.Adapter<ListValueAdapter.Curr
     }
 
     @Override
-    public void onBindViewHolder(CurrencyViewHolder holder, final int position) {
-        CurrencyValueModel c = data.get(position);
-        holder.txtNumber.setText(String.valueOf(c.getRate()));
-        holder.txtCurrency.setText(c.getDate());
+    public void onBindViewHolder(@NonNull CurrencyViewHolder holder, final int position) {
+        holder.bind();
     }
 
     @Override
@@ -47,11 +45,11 @@ public class ListValueAdapter extends RecyclerView.Adapter<ListValueAdapter.Curr
         return data.size();
     }
 
+    @NonNull
     @Override
     public CurrencyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_currency_list_value, parent, false);
-        return new CurrencyViewHolder(v);
+        ItemCurrencyListValueBinding binding = ItemCurrencyListValueBinding.inflate(LayoutInflater.from(parent.getContext()));
+        return new CurrencyViewHolder(binding);
     }
 
 }

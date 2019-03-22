@@ -5,7 +5,7 @@
 
         <variable
             name="currency"
-            type="com.script972.currencyrate.domain.database.entity.CurrencySelectValue" />
+            type="com.script972.currencyrate.ui.model.CurrencySelectValue" />
 
         <variable
             name="listener"
@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="@dimen/dimen_8">
 
         <LinearLayout
             android:id="@+id/ll_item"
@@ -34,14 +34,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{String.valueOf(currency.rate)}"
-                android:textSize="24sp" />
+                android:textSize="@dimen/text_22" />
 
             <TextView
                 android:id="@+id/txt_currency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{currency.titleShort}"
-                android:textSize="22sp" />
+                android:textSize="@dimen/text_20" />
 
         </LinearLayout>
 

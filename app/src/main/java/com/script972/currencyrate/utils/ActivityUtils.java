@@ -3,8 +3,7 @@ package com.script972.currencyrate.utils;
 import android.content.Context;
 import android.content.Intent;
 
-import com.script972.currencyrate.api.model.CurrencyResponce;
-import com.script972.currencyrate.domain.database.entity.CurrencySelectValue;
+import com.script972.currencyrate.ui.model.CurrencySelectValue;
 import com.script972.currencyrate.ui.activities.DetailsActivity;
 import com.script972.currencyrate.ui.activities.MainActivity;
 

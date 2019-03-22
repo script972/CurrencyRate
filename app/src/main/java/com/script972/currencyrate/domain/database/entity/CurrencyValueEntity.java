@@ -1,14 +1,16 @@
 package com.script972.currencyrate.domain.database.entity;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(foreignKeys = @ForeignKey(entity = CurrencyEntity.class,
         parentColumns = "id",
-        childColumns = "currencyId",
+        childColumns = "currency_id",
         onDelete = CASCADE))
 public class CurrencyValueEntity {
 
@@ -19,9 +21,10 @@ public class CurrencyValueEntity {
 
     private long date;
 
-
+    @ColumnInfo(name = "currency_id", index = true)
     private long currencyId;
 
+    @Ignore
     public CurrencyValueEntity() {
     }
 

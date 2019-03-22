@@ -1,19 +1,10 @@
 package com.script972.currencyrate.viewmodels;
 
-import android.app.Application;
-import android.util.Log;
-
-import com.script972.currencyrate.api.model.ApiResponse;
-import com.script972.currencyrate.api.model.CurrencyResponce;
-import com.script972.currencyrate.core.CurrencyApplication;
-import com.script972.currencyrate.domain.database.entity.CurrencySelectValue;
+import com.script972.currencyrate.ui.model.CurrencySelectValue;
 import com.script972.currencyrate.domain.repository.impl.CurrencyRepositoryImpl;
 import com.script972.currencyrate.domain.repository.CurrencyRepository;
-import com.script972.currencyrate.utils.SharedPreferencesUtils;
 
-import java.security.AlgorithmParameters;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -27,6 +18,7 @@ public class MainViewModel extends ViewModel {
      * Immutable data
      */
     private List<CurrencySelectValue> apiResponse;
+
     private final MediatorLiveData<List<CurrencySelectValue>> dataList;
 
     private CurrencyRepository currencyRepository;
@@ -56,23 +48,21 @@ public class MainViewModel extends ViewModel {
     }
 
     /**
-     * Filter data by subsring
+     * Filter data by substring
      */
     public void filterData(String value) {
-        /*if (value == null || value.isEmpty() || apiResponse != null) {
-            dataList.setValue(apiResponse.getCurrencyResponceList());
+        if (value == null || value.isEmpty()) {
+            dataList.setValue(apiResponse);
             return;
         }
-        List<CurrencyResponce> listData = new ArrayList<>();
-        listData.addAll(dataList.getValue());
 
-        List<CurrencyResponce> newData = new ArrayList<>();
-        for (int i = 0; i < listData.size(); i++) {
-            if (listData.get(i).getTitle().toLowerCase().contains(value.toLowerCase()) ||
-                    listData.get(i).getTitleShort().toLowerCase().contains(value.toLowerCase())) {
-                newData.add(listData.get(i));
+        List<CurrencySelectValue> newData = new ArrayList<>();
+        for (int i = 0; i < apiResponse.size(); i++) {
+            if (apiResponse.get(i).getTitle().toLowerCase().contains(value.toLowerCase()) ||
+                    apiResponse.get(i).getTitleShort().toLowerCase().contains(value.toLowerCase())) {
+                newData.add(apiResponse.get(i));
             }
         }
-        dataList.setValue(newData);*/
+        dataList.setValue(newData);
     }
 }

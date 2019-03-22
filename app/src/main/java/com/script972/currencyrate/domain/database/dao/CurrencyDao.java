@@ -21,8 +21,10 @@ public interface CurrencyDao {
     @Insert
     void insert(CurrencyEntity value);
 
-    @Query("SELECT * FROM CurrencyEntity WHERE titleShort=:shortTitle")
+    @Query("SELECT * FROM CurrencyEntity WHERE title_short = :shortTitle")
     CurrencyEntity getByShortValue(String shortTitle);
 
 
+    @Query("UPDATE CurrencyEntity SET top_currency = 1 WHERE title_short = :currency")
+    void markAsFavorite(String currency);
 }

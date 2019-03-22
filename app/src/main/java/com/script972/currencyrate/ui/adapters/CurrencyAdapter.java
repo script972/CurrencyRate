@@ -3,9 +3,8 @@ package com.script972.currencyrate.ui.adapters;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.script972.currencyrate.api.model.CurrencyResponce;
 import com.script972.currencyrate.databinding.ItemCurrencyListBinding;
-import com.script972.currencyrate.domain.database.entity.CurrencySelectValue;
+import com.script972.currencyrate.ui.model.CurrencySelectValue;
 
 import java.util.List;
 
@@ -27,8 +26,8 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.Curren
 
         private void bind() {
             binding.setCurrency(data.get(getAdapterPosition()));
-            binding.invalidateAll();
             binding.setListener(clicker);
+            binding.invalidateAll();
         }
     }
 

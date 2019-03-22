@@ -4,14 +4,12 @@ package com.script972.currencyrate.ui.activities;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.script972.currencyrate.R;
-import com.script972.currencyrate.api.model.CurrencyResponce;
 import com.script972.currencyrate.databinding.ActivityMainBinding;
-import com.script972.currencyrate.domain.database.entity.CurrencySelectValue;
+import com.script972.currencyrate.ui.model.CurrencySelectValue;
 import com.script972.currencyrate.utils.ActivityUtils;
 import com.script972.currencyrate.utils.DateUtils;
 import com.script972.currencyrate.utils.SharedPreferencesUtils;
@@ -110,13 +108,14 @@ public class MainActivity extends BaseActivity {
     }
 
     public void loadCurrency() {
-        viewModel.getDataForList().observe(this, this::handleResponse);
+        viewModel.getDataForList().observe(this, this::handleModification);
     }
 
-    private void handleResponse(List<CurrencySelectValue> currencyResponceList) {
+    private void handleModification(List<CurrencySelectValue> dataList) {
         this.list.clear();
-        this.list.addAll(currencyResponceList);
-        this.basicData.addAll(currencyResponceList);
+        Log.i("handle_modification", "dataListActivity=" + dataList.size());
+        this.list.addAll(dataList);
+        this.basicData.addAll(dataList);
         this.adapter.notifyDataSetChanged();
     }
 

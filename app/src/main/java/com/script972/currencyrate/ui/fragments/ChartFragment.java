@@ -13,11 +13,9 @@ import com.script972.currencyrate.R;
 import com.script972.currencyrate.ui.activities.DetailsActivity;
 import com.script972.currencyrate.ui.model.CurrencyValueModel;
 import com.script972.currencyrate.utils.DateUtils;
-import com.script972.currencyrate.utils.NumberUtils;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -60,10 +58,10 @@ public class ChartFragment extends Fragment {
     }
 
     public void updateList() {
-        data = ((DetailsActivity) getActivity()).getDataCurrencyList();
-        /*DateUtils.patterntToTimestamp(data.get(0).getDate());
-         *//*Collections.sort(data, (o1, o2) -> DateUtils.chartValueFromStr(o1.getDate()).getTime() >
-                DateUtils.chartValueFromStr(o2.getDate()).getTime() ? 0 : 1);*//*
+        /*data = ((DetailsActivity) getActivity()).getDataCurrencyList();
+        DateUtils.patterntToTimestamp(data.get(0).getDate());
+        Collections.sort(data, (o1, o2) -> DateUtils.chartValueFromStr(o1.getDate()).getTime() >
+                DateUtils.chartValueFromStr(o2.getDate()).getTime() ? 0 : 1);
         DataPoint[] dataPoints = new DataPoint[data.size()];
         for (int i = 0; i < data.size(); i++) {
             dataPoints[i] = new DataPoint(DateUtils.chartValueFromStr(data.get(i).getDate()), Double.parseDouble(data.get(i).getRate()));

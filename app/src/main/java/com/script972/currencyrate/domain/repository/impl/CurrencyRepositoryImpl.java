@@ -1,11 +1,13 @@
 package com.script972.currencyrate.domain.repository.impl;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.script972.currencyrate.api.model.CurrencyResponce;
 import com.script972.currencyrate.api.services.CurrencyApiService;
 import com.script972.currencyrate.core.CurrencyApplication;
-import com.script972.currencyrate.domain.database.entity.CurrencySelectValue;
+import com.script972.currencyrate.ui.model.CurrencySelectValue;
 import com.script972.currencyrate.managers.RetrofitManager;
 import com.script972.currencyrate.domain.database.entity.CurrencyEntity;
 import com.script972.currencyrate.domain.database.entity.CurrencyValueEntity;
@@ -15,6 +17,8 @@ import com.script972.currencyrate.ui.model.CurrencyValueModel;
 import com.script972.currencyrate.utils.DateUtils;
 import com.script972.currencyrate.managers.DatabaseManager;
 import com.script972.currencyrate.utils.SharedPreferencesUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,33 +46,34 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
     @Override
     public LiveData<List<CurrencySelectValue>> findAllCurrencyForToday() {
         final MutableLiveData<List<CurrencySelectValue>> liveData = new MutableLiveData<>();
-        db.getCurrencyValueDao().getValuesForCurrency(DateUtils.entityDateFromCalendar(
+        Log.i("denLogtime", ">>>>=" + DateUtils.entityDateFromCalendar(Calendar.getInstance()));
+        db.getCurrencyValueDao().getValuesForDate(DateUtils.entityDateFromCalendar(
                 Calendar.getInstance())).observeForever(liveData::setValue);
-        Call<List<CurrencyResponce>> call = apiService.getAllCurrencyForToday();
+        // Call<List<CurrencyResponce>> call = apiService.getAllCurrencyForToday();
+        Call<List<CurrencyResponce>> call = apiService.getAllCurrencyForDate(DateUtils.soutDateForApi(Calendar.getInstance().getTimeInMillis()));
         call.enqueue(new Callback<List<CurrencyResponce>>() {
             @Override
-            public void onResponse(Call<List<CurrencyResponce>> call, Response<List<CurrencyResponce>> response) {
+            public void onResponse(@NotNull Call<List<CurrencyResponce>> call, @NotNull Response<List<CurrencyResponce>> response) {
                 updaAllDatabaseCurrencyIfNeed(response.body());
-                SharedPreferencesUtils.setLastSyncDate(CurrencyApplication.getApplication(), Calendar.getInstance().getTimeInMillis());
             }
 
             @Override
-            public void onFailure(Call<List<CurrencyResponce>> call, Throwable t) {
+            public void onFailure(@NotNull Call<List<CurrencyResponce>> call, @NotNull Throwable t) {
             }
         });
         return liveData;
     }
 
     private void updaAllDatabaseCurrencyIfNeed(List<CurrencyResponce> currencyResponceList) {
-        new FillCurrency(currencyResponceList).execute();
+        new FillCurrency(currencyResponceList, db).execute();
     }
 
     @Override
     public LiveData<List<CurrencyValueModel>> findAllCurrencyForDates(List<Long> dateQuery, String currencyValue) {
         long startDate = dateQuery.get(0);
         long endDate = dateQuery.get(dateQuery.size() - 1);
-        new CurrencyValueForDates(db, dateQuery, currencyValue).execute();
-        LiveData<List<CurrencyValueEntity>> listLiveData = db.getCurrencyValueDao().getValuesForCurrency(currencyValue, startDate, endDate);
+        new CurrencyValueForDates(db, apiService, dateQuery, currencyValue).execute();
+        LiveData<List<CurrencyValueEntity>> listLiveData = db.getCurrencyValueDao().getValuesForDate(currencyValue, startDate, endDate);
         return Transformations.map(listLiveData, input -> {
             List<CurrencyValueModel> outData = new ArrayList<>();
             for (int i = 0; i < input.size(); i++) {
@@ -78,9 +83,11 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         });
     }
 
+    //TODO implement
     @Override
     public void changeFavorite(String currency) {
-        //TODO
+        db.getCurrencyDao().markAsFavorite(currency);
+
     }
 
     /**
@@ -91,12 +98,15 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         private List<Long> dateQuery;
         private String currencyValue;
         private DatabaseManager db;
+        private CurrencyApiService apiService;
 
-        public CurrencyValueForDates(DatabaseManager db, List<Long> dateQuery, String currencyValue) {
+        CurrencyValueForDates(DatabaseManager db, CurrencyApiService apiService, List<Long> dateQuery, String currencyValue) {
             this.db = db;
+            this.apiService = apiService;
             this.dateQuery = dateQuery;
             this.currencyValue = currencyValue;
         }
+
 
         @Override
         protected void onPreExecute() {
@@ -133,20 +143,17 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
      */
     class FillCurrency extends AsyncTask<Void, Void, Void> {
 
-        List<CurrencyResponce> data;
+        private List<CurrencyResponce> data;
+        private DatabaseManager db;
 
-        public FillCurrency(List<CurrencyResponce> currencyResponceList) {
+        FillCurrency(List<CurrencyResponce> currencyResponceList, DatabaseManager db) {
             this.data = currencyResponceList;
+            this.db = db;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
         }
 
         @Override
@@ -172,7 +179,15 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
             return null;
         }
 
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            SharedPreferencesUtils.setLastSyncDate(CurrencyApplication.getApplication(), Calendar.getInstance().getTimeInMillis());
+            super.onPostExecute(aVoid);
+        }
+
         private boolean existingDataForCurrencyAtDate(CurrencyEntity curr, long entityDate) {
+            if (curr == null)
+                return false;
             return db.getCurrencyValueDao().getValueForCurrencyAndDate(curr.getId(), entityDate) != null;
         }
     }

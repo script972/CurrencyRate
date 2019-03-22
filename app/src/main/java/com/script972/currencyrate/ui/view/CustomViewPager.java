@@ -20,7 +20,7 @@ public class CustomViewPager extends ViewPager {
 
     private void parseAttributes(Context context, AttributeSet attrs) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ViewPagerValues, 0, 0);
-        swipable = a.getBoolean(R.styleable.ViewPagerValues_swipeable, true);
+        setPagingEnabled(a.getBoolean(R.styleable.ViewPagerValues_swipeable, true));
         a.recycle();
     }
 

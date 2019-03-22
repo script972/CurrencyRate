@@ -1,6 +1,9 @@
 package com.script972.currencyrate.domain.database.entity;
 
+
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -13,10 +16,13 @@ public class CurrencyEntity {
 
     private String title;
 
+    @ColumnInfo(name = "title_short")
     private String titleShort;
 
+    @ColumnInfo(name = "top_currency")
     private Boolean topCurrency = false;
 
+    @Ignore
     public CurrencyEntity() {
     }
 
