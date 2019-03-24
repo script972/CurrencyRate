@@ -12,8 +12,8 @@ import java.util.Locale;
 public class DateUtils {
 
     private static String DATE_TIME_PATTERN = "EE MMM d 'at' h:mma";
-    private static String DATE_PATTERN_API = "YYYYMMdd";
-    private static String DATE_PATTERN = "YYYY MM dd";
+    private static String DATE_PATTERN_API = "yyyyMMdd";
+    private static String DATE_PATTERN = "yyyy MM dd";
     private static String DATE_CHART_PATTERN = "MM dd";
     private static String DATE_PATTERN_PARSE_API = "dd.MM.yyyy";
 
@@ -74,7 +74,7 @@ public class DateUtils {
         return entityDate(simpleDateFormat.format(calendar.getTime()));
     }
 
-    public static Long roundDateForApi(long time) {
+    public static Long roundDate(long time) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(time);
         calendar.set(Calendar.HOUR, 10);

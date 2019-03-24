@@ -52,7 +52,7 @@ public class DetailsViewModel extends ViewModel {
         int days = DateDiffUtils.daysBetween(startDate.getTime(), endDate.getTime());
         while (days >= 0) {
             days--;
-            outDate.add(DateUtils.roundDateForApi(startDate.getTime().getTime()));
+            outDate.add(DateUtils.roundDate(startDate.getTime().getTime()));
             startDate.add(Calendar.DAY_OF_MONTH, 1);
         }
         return outDate;
