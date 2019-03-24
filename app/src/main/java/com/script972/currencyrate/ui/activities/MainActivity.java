@@ -4,7 +4,6 @@ package com.script972.currencyrate.ui.activities;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 
 import com.script972.currencyrate.R;
@@ -84,7 +83,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initViewModel() {
-        this.viewModel.getCurrenciesLiveData().observe(this, this::handleModification);;
+        this.viewModel.getCurrenciesLiveData().observe(this, this::handleModification);
     }
 
     /**
@@ -101,7 +100,6 @@ public class MainActivity extends BaseActivity {
         } else {
             this.binding.txtLastUpdate.setVisibility(View.GONE);
         }
-
     }
 
     private void initToolbar() {
@@ -109,7 +107,6 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.label_main_activity));
     }
-
 
     private void handleModification(List<CurrencySelectValue> dataList) {
         this.list.clear();

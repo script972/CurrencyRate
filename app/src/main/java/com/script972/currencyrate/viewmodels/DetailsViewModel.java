@@ -61,4 +61,5 @@ public class DetailsViewModel extends ViewModel {
     public void changeFavorite(String currency) {
         currencyRepository.changeFavorite(currency);
     }
+
 }

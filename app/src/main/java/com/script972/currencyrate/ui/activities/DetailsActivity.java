@@ -65,7 +65,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         list.addAll(currencyModelList);
         adapter.notifyDataSetChanged();
         listFragment.updateList();
-        chartFragment.updateList();
+        chartFragment.updateList(list);
     }
 
     private void parseIntent() {
@@ -78,6 +78,27 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         this.binding.txtEndDate.setOnClickListener(this);
         setupViewPager(binding.viewPager);
         this.binding.bottomNavigationView.setOnNavigationItemSelectedListener(bottomMenuListener);
+        this.binding.btnWeak.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+            endDate = Calendar.getInstance();
+            calendar.add(Calendar.WEEK_OF_MONTH, -1);
+            startDate = calendar;
+            refreshDateRange();
+        });
+        this.binding.btnMonth.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+            endDate = Calendar.getInstance();
+            calendar.add(Calendar.MONTH, -1);
+            startDate = calendar;
+            refreshDateRange();
+        });
+        this.binding.btnYear.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+            endDate = Calendar.getInstance();
+            calendar.add(Calendar.YEAR, -1);
+            startDate = calendar;
+            refreshDateRange();
+        });
 
     }
 
@@ -120,6 +141,8 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void refreshDateRange() {
+        this.binding.txtStartDate.setText(getResources().getString(R.string.start_date) + " " + DateUtils.soutDate(startDate.getTimeInMillis()));
+        this.binding.txtEndDate.setText(getResources().getString(R.string.end_date) + " " + DateUtils.soutDate(endDate.getTimeInMillis()));
         if (!this.startDate.before(this.endDate)) {
             Toast.makeText(this, getResources().getString(R.string.toast_not_valid_date_value), Toast.LENGTH_LONG).show();
             return;
@@ -133,14 +156,12 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
             case R.id.txt_start_date:
                 DialogUtils.showDateDialog(this, startDate, value -> {
                     this.startDate = value;
-                    this.binding.txtStartDate.setText(getResources().getString(R.string.start_date) + " " + DateUtils.soutDate(value.getTimeInMillis()));
                     refreshDateRange();
                 });
                 break;
             case R.id.txt_end_date:
                 DialogUtils.showDateDialog(this, this.endDate, value -> {
                     this.endDate = value;
-                    this.binding.txtEndDate.setText(getResources().getString(R.string.end_date) + " " + DateUtils.soutDate(value.getTimeInMillis()));
                     refreshDateRange();
                 });
                 break;

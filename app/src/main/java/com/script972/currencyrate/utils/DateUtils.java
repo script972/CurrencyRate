@@ -42,6 +42,15 @@ public class DateUtils {
         return simpleDateFormat.format((value));
     }
 
+    public static long soutDateFromApi(String value) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN_API, Locale.US);
+        try {
+            return simpleDateFormat.parse(value).getTime();
+        } catch (ParseException e) {
+            return -1;
+        }
+    }
+
     public static long entityDate(String date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN_PARSE_API, Locale.US);
         try {
