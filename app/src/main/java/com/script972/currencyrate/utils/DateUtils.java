@@ -11,11 +11,11 @@ import java.util.Locale;
 
 public class DateUtils {
 
-    private static String DATE_TIME_PATTERN = "EE MMM d 'at' h:mma";
-    private static String DATE_PATTERN_API = "yyyyMMdd";
-    private static String DATE_PATTERN = "yyyy MM dd";
-    private static String DATE_CHART_PATTERN = "MM dd";
-    private static String DATE_PATTERN_PARSE_API = "dd.MM.yyyy";
+    private final static String DATE_TIME_PATTERN = "EE MMM d 'at' h:mma";
+    private final static String DATE_PATTERN_API = "yyyyMMdd";
+    private final static String DATE_PATTERN = "yyyy MM dd";
+    private final static String DATE_CHART_PATTERN = "MM dd";
+    private final static String DATE_PATTERN_PARSE_API = "dd.MM.yyyy";
 
     public static String soutDateWithTime(long value) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_TIME_PATTERN, Locale.US);
@@ -27,28 +27,9 @@ public class DateUtils {
         return simpleDateFormat.format((value));
     }
 
-    public static long patterntToTimestamp(String value) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.US);
-        try {
-            return simpleDateFormat.parse(value).getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
-
     public static String soutDateForApi(long value) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN_API, Locale.US);
         return simpleDateFormat.format((value));
-    }
-
-    public static long soutDateFromApi(String value) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN_API, Locale.US);
-        try {
-            return simpleDateFormat.parse(value).getTime();
-        } catch (ParseException e) {
-            return -1;
-        }
     }
 
     public static long entityDate(String date) {
