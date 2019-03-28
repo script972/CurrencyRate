@@ -1,22 +1,18 @@
 package com.script972.currencyrate.ui.model;
 
 import androidx.room.ColumnInfo;
-import androidx.room.Ignore;
 
-public class CurrencySelectValue {
+public class CurrencySelectValueUi {
 
-    @ColumnInfo(name = "title_short")
     private String titleShort;
     private String title;
-    private double rate;
-    @ColumnInfo(name = "top_currency")
+    private String rate;
     private Boolean topCurrency = false;
 
-    @Ignore
-    public CurrencySelectValue() {
+    public CurrencySelectValueUi() {
     }
 
-    public CurrencySelectValue(String titleShort, String title, double rate, Boolean topCurrency) {
+    public CurrencySelectValueUi(String titleShort, String title, String rate, Boolean topCurrency) {
         this.titleShort = titleShort;
         this.title = title;
         this.rate = rate;
@@ -39,11 +35,11 @@ public class CurrencySelectValue {
         this.title = title;
     }
 
-    public double getRate() {
+    public String getRate() {
         return rate;
     }
 
-    public void setRate(double rate) {
+    public void setRate(String rate) {
         this.rate = rate;
     }
 

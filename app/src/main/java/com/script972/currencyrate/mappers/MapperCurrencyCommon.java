@@ -2,7 +2,9 @@ package com.script972.currencyrate.mappers;
 
 import com.script972.currencyrate.domain.api.model.CurrencyResponce;
 import com.script972.currencyrate.domain.database.entity.CurrencyEntity;
+import com.script972.currencyrate.domain.database.entity.CurrencySelectValue;
 import com.script972.currencyrate.domain.database.entity.CurrencyValueEntity;
+import com.script972.currencyrate.ui.model.CurrencySelectValueUi;
 import com.script972.currencyrate.ui.model.CurrencyValueModel;
 import com.script972.currencyrate.utils.DateUtils;
 import com.script972.currencyrate.utils.NumberUtils;
@@ -42,6 +44,15 @@ public class MapperCurrencyCommon {
             currencyValue.setDate(DateUtils.entityDate(data.getDate()));
             currencyValue.setRate(data.getRate());
             return currencyValue;
+        }
+
+        public static CurrencySelectValueUi mapDbToMainUi(CurrencySelectValue entity) {
+            CurrencySelectValueUi ui = new CurrencySelectValueUi();
+            ui.setRate(NumberUtils.convertToStringWithRound(entity.getRate()));
+            ui.setTitle(entity.getTitle());
+            ui.setTitleShort(entity.getTitleShort());
+            ui.setTopCurrency(entity.getTopCurrency());
+            return ui;
         }
     }
 }

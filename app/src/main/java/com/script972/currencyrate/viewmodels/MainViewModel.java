@@ -1,8 +1,9 @@
 package com.script972.currencyrate.viewmodels;
 
-import com.script972.currencyrate.ui.model.CurrencySelectValue;
+import com.script972.currencyrate.domain.database.entity.CurrencySelectValue;
 import com.script972.currencyrate.domain.repository.impl.CurrencyRepositoryImpl;
 import com.script972.currencyrate.domain.repository.CurrencyRepository;
+import com.script972.currencyrate.ui.model.CurrencySelectValueUi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,15 +18,15 @@ public class MainViewModel extends ViewModel {
     /**
      * Immutable data
      */
-    private List<CurrencySelectValue> dataList = new ArrayList<>();
+    private List<CurrencySelectValueUi> dataList = new ArrayList<>();
 
-    private final MediatorLiveData<List<CurrencySelectValue>> currenciesLiveData;
+    private final MediatorLiveData<List<CurrencySelectValueUi>> currenciesLiveData;
 
     private CurrencyRepository currencyRepository = new CurrencyRepositoryImpl();
 
     public MainViewModel() {
         this.currenciesLiveData = new MediatorLiveData<>();
-        LiveData<List<CurrencySelectValue>> source = currencyRepository.findAllCurrencyForToday();
+        LiveData<List<CurrencySelectValueUi>> source = currencyRepository.findAllCurrencyForToday();
         currenciesLiveData.addSource(
                 source,
                 dataListRep -> {
@@ -44,7 +45,7 @@ public class MainViewModel extends ViewModel {
             return;
         }
 
-        List<CurrencySelectValue> newData = new ArrayList<>();
+        List<CurrencySelectValueUi> newData = new ArrayList<>();
         for (int i = 0; i < dataList.size(); i++) {
             if (dataList.get(i).getTitle().toLowerCase().contains(value.toLowerCase()) ||
                     dataList.get(i).getTitleShort().toLowerCase().contains(value.toLowerCase())) {
@@ -55,7 +56,7 @@ public class MainViewModel extends ViewModel {
     }
 
     @NonNull
-    public LiveData<List<CurrencySelectValue>> getCurrenciesLiveData() {
+    public LiveData<List<CurrencySelectValueUi>> getCurrenciesLiveData() {
         return currenciesLiveData;
     }
 }

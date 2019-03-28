@@ -1,19 +1,19 @@
 package com.script972.currencyrate.domain.repository.impl;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.script972.currencyrate.domain.api.model.CurrencyResponce;
 import com.script972.currencyrate.domain.api.services.CurrencyApiService;
 import com.script972.currencyrate.core.CurrencyApplication;
 import com.script972.currencyrate.domain.database.dao.CurrencyDao;
 import com.script972.currencyrate.domain.database.dao.CurrencyValueDao;
-import com.script972.currencyrate.ui.model.CurrencySelectValue;
+import com.script972.currencyrate.domain.database.entity.CurrencySelectValue;
 import com.script972.currencyrate.managers.RetrofitManager;
 import com.script972.currencyrate.domain.database.entity.CurrencyEntity;
 import com.script972.currencyrate.domain.database.entity.CurrencyValueEntity;
 import com.script972.currencyrate.domain.repository.CurrencyRepository;
 import com.script972.currencyrate.mappers.MapperCurrencyCommon;
+import com.script972.currencyrate.ui.model.CurrencySelectValueUi;
 import com.script972.currencyrate.ui.model.CurrencyValueModel;
 import com.script972.currencyrate.utils.DateUtils;
 import com.script972.currencyrate.managers.DatabaseManager;
@@ -46,7 +46,7 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
     }
 
     @Override
-    public LiveData<List<CurrencySelectValue>> findAllCurrencyForToday() {
+    public LiveData<List<CurrencySelectValueUi>> findAllCurrencyForToday() {
         // Call<List<CurrencyResponce>> call = apiService.getAllCurrencyForToday();
         Call<List<CurrencyResponce>> call = apiService
                 .getAllCurrencyForDate(DateUtils.soutDateForApi(Calendar.getInstance().getTimeInMillis()));
@@ -61,7 +61,16 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
             public void onFailure(@NotNull Call<List<CurrencyResponce>> call, @NotNull Throwable t) {
             }
         });
-        return currencyValueDao.getValuesForDate(DateUtils.entityDateFromCalendar(Calendar.getInstance()));
+        LiveData<List<CurrencySelectValue>> listLiveData = currencyValueDao.getValuesForDate(
+                DateUtils.entityDateFromCalendar(Calendar.getInstance()));
+
+        return Transformations.map(listLiveData, input -> {
+            List<CurrencySelectValueUi> outData = new ArrayList<>();
+            for (int i = 0; i < input.size(); i++) {
+                outData.add(MapperCurrencyCommon.MapperCurrencyValue.mapDbToMainUi(input.get(i)));
+            }
+            return outData;
+        });
     }
 
     private void updaAllDatabaseCurrencyIfNeed(List<CurrencyResponce> currencyResponceList) {

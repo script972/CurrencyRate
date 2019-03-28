@@ -53,8 +53,10 @@ public class RetrofitManager {
     public static class NullOnEmptyConverterFactory extends Converter.Factory {
 
         @Override
-        public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
-            final Converter<ResponseBody, ?> delegate = retrofit.nextResponseBodyConverter(this, type, annotations);
+        public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations,
+                                                                Retrofit retrofit) {
+            final Converter<ResponseBody, ?> delegate = retrofit.nextResponseBodyConverter(
+                    this, type, annotations);
             return body -> {
                 if (body.contentLength() == 0) {
                     return null;
@@ -67,8 +69,10 @@ public class RetrofitManager {
     public static class ToStringConverterFactory extends Converter.Factory {
 
         @Override
-        public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
-            final Converter<ResponseBody, ?> delegate = retrofit.nextResponseBodyConverter(this, type, annotations);
+        public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations,
+                                                                Retrofit retrofit) {
+            final Converter<ResponseBody, ?> delegate = retrofit.nextResponseBodyConverter(
+                    this, type, annotations);
             return value -> {
                 if (String.class.equals(type)) {
                     return value.string();

@@ -48,7 +48,8 @@ public class ListValueAdapter extends RecyclerView.Adapter<ListValueAdapter.Curr
     @NonNull
     @Override
     public CurrencyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ItemCurrencyListValueBinding binding = ItemCurrencyListValueBinding.inflate(LayoutInflater.from(parent.getContext()));
+        ItemCurrencyListValueBinding binding = ItemCurrencyListValueBinding.inflate(
+                LayoutInflater.from(parent.getContext()));
         return new CurrencyViewHolder(binding);
     }
 

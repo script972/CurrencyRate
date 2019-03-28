@@ -104,6 +104,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
 
     private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(currency.toUpperCase() + " " + getResources().getString(R.string.label_statistics));
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back));
@@ -141,8 +142,10 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void refreshDateRange() {
-        this.binding.txtStartDate.setText(getResources().getString(R.string.start_date) + " " + DateUtils.soutDate(startDate.getTimeInMillis()));
-        this.binding.txtEndDate.setText(getResources().getString(R.string.end_date) + " " + DateUtils.soutDate(endDate.getTimeInMillis()));
+        this.binding.txtStartDate.setText(getResources().getString(R.string.start_date) + " "
+                + DateUtils.soutDate(startDate.getTimeInMillis()));
+        this.binding.txtEndDate.setText(getResources().getString(R.string.end_date) + " "
+                + DateUtils.soutDate(endDate.getTimeInMillis()));
         if (!this.startDate.before(this.endDate)) {
             Toast.makeText(this, getResources().getString(R.string.toast_not_valid_date_value), Toast.LENGTH_LONG).show();
             return;

@@ -11,15 +11,10 @@ import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.script972.currencyrate.R;
-import com.script972.currencyrate.ui.activities.DetailsActivity;
 import com.script972.currencyrate.ui.model.CurrencyValueModel;
 import com.script972.currencyrate.utils.DateUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -67,6 +62,7 @@ public class ChartFragment extends Fragment {
         graph.getViewport().setMaxX(dataPoints[data.size() - 1].getX());
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
         graph.post(() -> {
+            graph.removeAllSeries();
             graph.addSeries(series);
             graph.getGridLabelRenderer().setLabelFormatter(
                     new DateAsXAxisLabelFormatter(getActivity(),

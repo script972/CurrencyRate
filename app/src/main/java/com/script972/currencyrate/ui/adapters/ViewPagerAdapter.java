@@ -1,6 +1,5 @@
 package com.script972.currencyrate.ui.adapters;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;

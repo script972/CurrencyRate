@@ -8,7 +8,8 @@ import android.view.View;
 
 import com.script972.currencyrate.R;
 import com.script972.currencyrate.databinding.ActivityMainBinding;
-import com.script972.currencyrate.ui.model.CurrencySelectValue;
+import com.script972.currencyrate.domain.database.entity.CurrencySelectValue;
+import com.script972.currencyrate.ui.model.CurrencySelectValueUi;
 import com.script972.currencyrate.utils.ActivityUtils;
 import com.script972.currencyrate.utils.DateUtils;
 import com.script972.currencyrate.utils.SharedPreferencesUtils;
@@ -33,12 +34,12 @@ public class MainActivity extends BaseActivity {
 
     private MainViewModel viewModel;
 
-    private final List<CurrencySelectValue> list = new ArrayList<>();
+    private final List<CurrencySelectValueUi> list = new ArrayList<>();
 
     /**
      * Immutable data
      */
-    private final List<CurrencySelectValue> basicData = new ArrayList<>();
+    private final List<CurrencySelectValueUi> basicData = new ArrayList<>();
 
     private ActivityMainBinding binding;
 
@@ -104,11 +105,12 @@ public class MainActivity extends BaseActivity {
 
     private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.label_main_activity));
     }
 
-    private void handleModification(List<CurrencySelectValue> dataList) {
+    private void handleModification(List<CurrencySelectValueUi> dataList) {
         this.list.clear();
         this.list.addAll(dataList);
         this.basicData.addAll(dataList);

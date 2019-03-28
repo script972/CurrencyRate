@@ -1,6 +1,6 @@
 package com.script972.currencyrate.domain.database.dao;
 
-import com.script972.currencyrate.ui.model.CurrencySelectValue;
+import com.script972.currencyrate.domain.database.entity.CurrencySelectValue;
 import com.script972.currencyrate.domain.database.entity.CurrencyValueEntity;
 
 import java.util.List;
