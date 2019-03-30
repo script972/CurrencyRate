@@ -1,6 +1,7 @@
 package com.script972.currencyrate.domain.repository.impl;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.script972.currencyrate.domain.api.model.CurrencyResponce;
 import com.script972.currencyrate.domain.api.services.CurrencyApiService;
@@ -129,14 +130,17 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         @Override
         protected Void doInBackground(Void... voids) {
             for (int i = 0; i < dateQuery.size(); i++) {
+                CurrencyValueEntity dbValue = currencyValueDao.getValuesForDate(currencyValue,
+                        dateQuery.get(i));
+                if (dbValue != null) {
+                    continue;
+                }
                 Call<List<CurrencyResponce>> call = apiService.getOnlyCurrencyForDate(
                         DateUtils.soutDateForApi(dateQuery.get(i)), currencyValue);
-
-                CurrencyValueEntity entity;
                 try {
                     List<CurrencyResponce> responce = call.execute().body();
                     if (!(responce.size() == 0)) {
-                        entity = MapperCurrencyCommon.MapperCurrencyValue.mapNetworkToDb(
+                        CurrencyValueEntity entity = MapperCurrencyCommon.MapperCurrencyValue.mapNetworkToDb(
                                 responce.get(0));
                         entity.setCurrencyId(currencyDao.getByShortValue(currencyValue).getId());
                         if (currencyValueDao.getItemCurrencyForDate(dateQuery.get(i),
@@ -147,6 +151,7 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
             }
             return null;
         }

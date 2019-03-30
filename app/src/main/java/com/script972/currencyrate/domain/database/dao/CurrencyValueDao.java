@@ -34,4 +34,8 @@ public interface CurrencyValueDao {
 
     @Query("SELECT * FROM CurrencyValueEntity WHERE date=:date AND currency_id=:id")
     CurrencyValueEntity getValueForCurrencyAndDate(int id, long date);
+
+    @Query("SELECT * FROM CurrencyValueEntity WHERE currency_id = (SELECT id FROM CurrencyEntity " +
+            "WHERE title_short =:currency) AND date = :date")
+    CurrencyValueEntity getValuesForDate(String currency, long date);
 }

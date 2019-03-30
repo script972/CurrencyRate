@@ -34,7 +34,7 @@ public class MapperCurrencyCommon {
         public static CurrencyValueModel mapDbToUi(CurrencyValueEntity entity) {
             CurrencyValueModel model = new CurrencyValueModel();
             model.setDate(DateUtils.soutDate(entity.getDate()));
-            model.setRate(NumberUtils.convertToStringWithRound(entity.getRate()));
+            model.setRate(NumberUtils.convertToStringWithRound(entity.getRate(),10000000.0));
             return model;
         }
 
@@ -48,7 +48,7 @@ public class MapperCurrencyCommon {
 
         public static CurrencySelectValueUi mapDbToMainUi(CurrencySelectValue entity) {
             CurrencySelectValueUi ui = new CurrencySelectValueUi();
-            ui.setRate(NumberUtils.convertToStringWithRound(entity.getRate()));
+            ui.setRate(NumberUtils.convertToStringWithRound(entity.getRate(), 100000.0));
             ui.setTitle(entity.getTitle());
             ui.setTitleShort(entity.getTitleShort());
             ui.setTopCurrency(entity.getTopCurrency());

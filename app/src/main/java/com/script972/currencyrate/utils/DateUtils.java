@@ -1,5 +1,7 @@
 package com.script972.currencyrate.utils;
 
+import android.util.Log;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,12 +37,12 @@ public class DateUtils {
         try {
             long value = simpleDateFormat.parse((date)).getTime();
             Calendar calendar = Calendar.getInstance();
-            calendar.clear();
             calendar.setTimeInMillis(value);
             calendar.set(Calendar.HOUR, 10);
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
+            Log.i("datedenlog", "Calendar="+calendar.getTimeInMillis());
             return calendar.getTimeInMillis();
         } catch (ParseException e) {
             e.printStackTrace();
@@ -60,6 +62,7 @@ public class DateUtils {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
+        Log.i("datedenlog", "roundDate="+calendar.getTimeInMillis());
         return calendar.getTimeInMillis();
     }
 
