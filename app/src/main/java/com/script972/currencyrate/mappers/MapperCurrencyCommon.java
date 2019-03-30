@@ -34,7 +34,7 @@ public class MapperCurrencyCommon {
         public static CurrencyValueModel mapDbToUi(CurrencyValueEntity entity) {
             CurrencyValueModel model = new CurrencyValueModel();
             model.setDate(DateUtils.soutDate(entity.getDate()));
-            model.setRate(NumberUtils.convertToStringWithRound(entity.getRate(),10000000.0));
+            model.setRate(NumberUtils.convertToStringWithRound(entity.getRate(),1000000000.0));
             return model;
         }
 

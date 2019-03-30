@@ -50,10 +50,10 @@ public class DetailsViewModel extends ViewModel {
     private List<Long> formatDateQuery(Calendar startDate, Calendar endDate) {
         List<Long> outDate = new ArrayList<>();
         int days = DateDiffUtils.daysBetween(startDate.getTime(), endDate.getTime());
-        while (days >= 0) {
+        while (days > 0) {
             days--;
-            outDate.add(DateUtils.roundDate(startDate.getTimeInMillis()));
             startDate.add(Calendar.DAY_OF_MONTH, 1);
+            outDate.add(DateUtils.roundDate(startDate.getTimeInMillis()));
         }
         return outDate;
     }

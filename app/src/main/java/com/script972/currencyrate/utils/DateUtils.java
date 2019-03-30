@@ -37,8 +37,9 @@ public class DateUtils {
         try {
             long value = simpleDateFormat.parse((date)).getTime();
             Calendar calendar = Calendar.getInstance();
+            calendar.clear();
             calendar.setTimeInMillis(value);
-            calendar.set(Calendar.HOUR, 10);
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
@@ -57,8 +58,9 @@ public class DateUtils {
 
     public static Long roundDate(long time) {
         Calendar calendar = Calendar.getInstance();
+        calendar.clear();
         calendar.setTimeInMillis(time);
-        calendar.set(Calendar.HOUR, 10);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
@@ -76,7 +78,7 @@ public class DateUtils {
     }
 
     public static Date chartValueFromStr(String date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy mm dd", Locale.US);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_PATTERN_UI, Locale.US);
         try {
             return simpleDateFormat.parse(date);
         } catch (ParseException e) {
