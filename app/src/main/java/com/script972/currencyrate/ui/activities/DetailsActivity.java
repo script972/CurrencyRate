@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.script972.currencyrate.R;
 import com.script972.currencyrate.databinding.ActivityDescriptionBinding;
 import com.script972.currencyrate.ui.model.CurrencyValueModel;
@@ -53,6 +54,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         parseIntent();
         initView();
         initViewModel();
+        rangeWeek();
     }
 
 
@@ -74,32 +76,44 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
 
     private void initView() {
         initToolbar();
+        initTab();
         this.binding.txtStartDate.setOnClickListener(this);
         this.binding.txtEndDate.setOnClickListener(this);
         setupViewPager(binding.viewPager);
         this.binding.bottomNavigationView.setOnNavigationItemSelectedListener(bottomMenuListener);
-        this.binding.btnWeak.setOnClickListener(v -> {
-            Calendar calendar = Calendar.getInstance();
-            endDate = Calendar.getInstance();
-            calendar.add(Calendar.WEEK_OF_MONTH, -1);
-            startDate = calendar;
-            refreshDateRange();
-        });
-        this.binding.btnMonth.setOnClickListener(v -> {
-            Calendar calendar = Calendar.getInstance();
-            endDate = Calendar.getInstance();
-            calendar.add(Calendar.MONTH, -1);
-            startDate = calendar;
-            refreshDateRange();
-        });
-        this.binding.btnYear.setOnClickListener(v -> {
-            Calendar calendar = Calendar.getInstance();
-            endDate = Calendar.getInstance();
-            calendar.add(Calendar.YEAR, -1);
-            startDate = calendar;
-            refreshDateRange();
-        });
 
+    }
+
+    private void initTab() {
+        /*TabLayout.Tab tab = this.binding.tabLayout.newTab();
+        tab.setText(R.string.btn_weak);*/
+        binding.tabLayout.addTab(this.binding.tabLayout.newTab().setText(R.string.btn_weak));
+        binding.tabLayout.addTab(this.binding.tabLayout.newTab().setText(R.string.btn_month));
+        binding.tabLayout.addTab(this.binding.tabLayout.newTab().setText(R.string.btn_year));
+        binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0:
+                        rangeWeek();
+                        break;
+                    case 1:
+                        rangeMonth();
+                        break;
+                    case 2:
+                        rangeYear();
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
     }
 
     private void initToolbar() {
@@ -151,6 +165,30 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
             return;
         }
         this.viewModel.rangeDateUpdate(this.startDate, this.endDate, this.currency);
+    }
+
+    private void rangeWeek() {
+        Calendar calendar = Calendar.getInstance();
+        endDate = Calendar.getInstance();
+        calendar.add(Calendar.WEEK_OF_MONTH, -1);
+        startDate = calendar;
+        refreshDateRange();
+    }
+
+    private void rangeMonth() {
+        Calendar calendar = Calendar.getInstance();
+        endDate = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -1);
+        startDate = calendar;
+        refreshDateRange();
+    }
+
+    private void rangeYear() {
+        Calendar calendar = Calendar.getInstance();
+        endDate = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, -1);
+        startDate = calendar;
+        refreshDateRange();
     }
 
     @Override

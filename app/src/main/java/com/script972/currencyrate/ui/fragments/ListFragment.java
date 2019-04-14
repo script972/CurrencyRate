@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.script972.currencyrate.R;
 import com.script972.currencyrate.ui.activities.DetailsActivity;
+import com.script972.currencyrate.ui.adapters.ItemOffsetDecoration;
 import com.script972.currencyrate.ui.adapters.ListValueAdapter;
 
 import androidx.annotation.NonNull;
@@ -51,6 +52,8 @@ public class ListFragment extends Fragment {
         rvCurrency.setItemAnimator(new DefaultItemAnimator());
         adapter = new ListValueAdapter(((DetailsActivity) getActivity()).getDataCurrencyList());
         rvCurrency.setAdapter(adapter);
+        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getContext(), R.dimen.dimen_8);
+        this.rvCurrency.addItemDecoration(itemDecoration);
         adapter.notifyDataSetChanged();
     }
 

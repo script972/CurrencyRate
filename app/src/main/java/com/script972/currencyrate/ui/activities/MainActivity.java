@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.tabs.TabLayout;
 import com.script972.currencyrate.R;
 import com.script972.currencyrate.databinding.ActivityMainBinding;
 import com.script972.currencyrate.domain.database.entity.CurrencySelectValue;
@@ -84,7 +85,6 @@ public class MainActivity extends BaseActivity {
 
     private void initView() {
         initToolbar();
-        initTab();
         initInetStatus();
         this.adapter = new CurrencyAdapter(this.list, currencyModel ->
                 ActivityUtils.startDetailsActivity(MainActivity.this, currencyModel));
@@ -98,9 +98,7 @@ public class MainActivity extends BaseActivity {
         this.adapter.notifyDataSetChanged();
     }
 
-    private void initTab() {
 
-    }
 
     private void initViewModel() {
         this.viewModel.getCurrenciesLiveData().observe(this, this::handleModification);

@@ -38,9 +38,9 @@
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_56"
-                app:tabIndicatorHeight="0dp"
                 android:background="@color/colorPrimary"
-                app:tabBackground="@drawable/tab_backgound"
+                app:tabIndicatorHeight="@dimen/dimen_4"
+                app:tabIndicatorColor="@color/colorIndicator"
                 app:tabMode="fixed"
                 app:tabGravity="fill"
                 app:tabTextColor="@color/colorWhite" />
@@ -56,6 +56,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/start_date"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:layout_marginLeft="@dimen/dimen_16"
                     android:layout_marginRight="@dimen/dimen_16"
                     android:textSize="16sp" />
 
@@ -68,35 +75,6 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:visibility="gone"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_weak"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/btn_weak" />
-
-                <Button
-                    android:id="@+id/btn_month"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:text="@string/btn_month" />
-
-                <Button
-                    android:id="@+id/btn_year"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:text="@string/btn_year" />
-
-            </LinearLayout>
 
         </LinearLayout>
 

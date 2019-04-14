@@ -9,4 +9,5 @@
     <color name="main_blue">#03BBF1</color>
     <color name="main_blue_active">#01B2E4</color>
     <color name="bottom_nav_color">@color/colorWhite</color>
+    <color name="colorIndicator">#FFFF8C</color>
 </resources>
