@@ -48,7 +48,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{currency.titleShort}"
-                android:textColor="@color/colorBlack"
                 android:layout_marginBottom="@dimen/dimen_16"
                 tools:text="IRR"
                 android:textSize="@dimen/text_24" />
