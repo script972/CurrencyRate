@@ -22,4 +22,8 @@
         <item name="actionMenuTextColor">@android:color/white</item>
     </style>
 
+    <style name="CustomButton">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
 </resources>

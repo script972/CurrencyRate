@@ -1,14 +1,19 @@
 package com.script972.currencyrate.ui.activities;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.script972.currencyrate.R;
 import com.script972.currencyrate.databinding.ActivityMainBinding;
 import com.script972.currencyrate.domain.database.entity.CurrencySelectValue;
+import com.script972.currencyrate.ui.adapters.ItemOffsetDecoration;
 import com.script972.currencyrate.ui.model.CurrencySelectValueUi;
 import com.script972.currencyrate.utils.ActivityUtils;
 import com.script972.currencyrate.utils.DateUtils;
@@ -20,7 +25,9 @@ import com.script972.currencyrate.viewmodels.MainViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuItemCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -54,25 +61,31 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private void initView() {
-        initToolbar();
-        initInetStatus();
-        this.binding.edSearch.addTextChangedListener(new TextWatcher() {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_toolbar_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        //TODO fix deprecated
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+            public boolean onQueryTextSubmit(String query) {
+                return false;
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                viewModel.filterData(s.toString());
+            public boolean onQueryTextChange(String newText) {
+                viewModel.filterData(newText);
+                return false;
             }
         });
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void initView() {
+        initToolbar();
+        initTab();
+        initInetStatus();
         this.adapter = new CurrencyAdapter(this.list, currencyModel ->
                 ActivityUtils.startDetailsActivity(MainActivity.this, currencyModel));
         this.binding.rvCurrency.setAdapter(this.adapter);
@@ -80,7 +93,13 @@ public class MainActivity extends BaseActivity {
         llm.setOrientation(RecyclerView.VERTICAL);
         this.binding.rvCurrency.setLayoutManager(llm);
         this.binding.rvCurrency.setItemAnimator(new DefaultItemAnimator());
+        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(this, R.dimen.dimen_8);
+        this.binding.rvCurrency.addItemDecoration(itemDecoration);
         this.adapter.notifyDataSetChanged();
+    }
+
+    private void initTab() {
+
     }
 
     private void initViewModel() {
@@ -106,6 +125,7 @@ public class MainActivity extends BaseActivity {
     private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
+        toolbar.inflateMenu(R.menu.main_toolbar_menu);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.label_main_activity));
     }

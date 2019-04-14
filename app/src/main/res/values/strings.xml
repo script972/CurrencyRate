@@ -16,5 +16,6 @@
     <string name="btn_month">Month</string>
     <string name="btn_year">Year</string>
     <string name="graph_timeline">Timeline</string>
+    <string name="action_search">Search</string>
 
 </resources>
