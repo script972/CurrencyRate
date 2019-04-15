@@ -98,8 +98,8 @@
             app:layout_constraintRight_toRightOf="parent"
             android:background="@color/colorAccent"
             app:menu="@menu/bottom_navigation_view_menu"
-            app:itemTextColor="@color/bottom_nav_color"
-            app:itemIconTint="@color/bottom_nav_color"
+            app:itemTextColor="@color/bottom_nav_color_select_unselect"
+            app:itemIconTint="@color/bottom_nav_color_select_unselect"
             />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
